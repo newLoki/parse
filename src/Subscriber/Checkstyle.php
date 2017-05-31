@@ -62,7 +62,11 @@ class Checkstyle extends Xml
 
         $this->xmlWriter->startElement('error');
         $this->xmlWriter->writeAttribute('line', $event->getNode()->getLine());
-        $this->xmlWriter->writeAttribute('message', $event->getRule()->getDescription());
+
+        $message = $event->getRule()->getDescription() . PHP_EOL;
+        $message .= implode(PHP_EOL, $event->getFile()->fetchNode($event->getNode()));
+
+        $this->xmlWriter->writeAttribute('message', $message);
         $this->xmlWriter->writeAttribute('source', $event->getRule()->getName());
         $this->xmlWriter->writeAttribute('severity', 'warning');
         $this->xmlWriter->endElement();
