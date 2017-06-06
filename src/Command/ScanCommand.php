@@ -2,6 +2,7 @@
 
 namespace Psecio\Parse\Command;
 
+use Psecio\Parse\Subscriber\Checkstyle;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -137,6 +138,9 @@ class ScanCommand extends Command
                 break;
             case 'xml':
                 $dispatcher->addSubscriber(new Xml($output));
+                break;
+            case 'checkstyle':
+                $dispatcher->addSubscriber(new Checkstyle($output));
                 break;
             default:
                 throw new RuntimeException("Unknown output format '{$input->getOption('format')}'");
